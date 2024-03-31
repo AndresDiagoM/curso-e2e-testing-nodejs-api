@@ -1,31 +1,27 @@
-const boom = require('@hapi/boom');
-const { models } = require('../db/sequelize');
+const boom = require('@hapi/boom')
+const { models } = require('../db/sequelize')
 
 class OrderService {
-
-  constructor(){
-  }
-
   async create(data) {
-    const customer = await models.Customer.findByPk(data.customerId);
+    const customer = await models.Customer.findByPk(data.customerId)
     if (!customer) {
-      throw boom.notFound('customer not found');
+      throw boom.notFound('customer not found')
     }
-    const newOrder = await models.Order.create(data);
-    return newOrder;
+    const newOrder = await models.Order.create(data)
+    return newOrder
   }
 
   async addItem(data) {
-    const product = await models.Product.findByPk(data.productId);
+    const product = await models.Product.findByPk(data.productId)
     if (!product) {
-      throw boom.notFound('product not found');
+      throw boom.notFound('product not found')
     }
-    const order = await models.Order.findByPk(data.orderId);
+    const order = await models.Order.findByPk(data.orderId)
     if (!order) {
-      throw boom.notFound('order not found');
+      throw boom.notFound('order not found')
     }
-    const newItem = await models.OrderProduct.create(data);
-    return newItem;
+    const newItem = await models.OrderProduct.create(data)
+    return newItem
   }
 
   async findByUser(userId) {
@@ -39,8 +35,8 @@ class OrderService {
           include: ['user']
         }
       ]
-    });
-    return orders;
+    })
+    return orders
   }
 
   async findOne(id) {
@@ -52,25 +48,24 @@ class OrderService {
         },
         'items'
       ]
-    });
+    })
     if (!order) {
-      throw boom.notFound('order not found');
+      throw boom.notFound('order not found')
     }
-    return order;
+    return order
   }
 
   async update(id, changes) {
-    const order = await this.findOne(id);
-    const rta = await order.update(changes);
-    return rta;
+    const order = await this.findOne(id)
+    const rta = await order.update(changes)
+    return rta
   }
 
   async delete(id) {
-    const order = await this.findOne(id);
-    await order.destroy();
-    return { id };
+    const order = await this.findOne(id)
+    await order.destroy()
+    return { id }
   }
-
 }
 
-module.exports = OrderService;
+module.exports = OrderService

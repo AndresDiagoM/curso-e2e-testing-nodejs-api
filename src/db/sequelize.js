@@ -1,11 +1,11 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize')
 
-const { config } = require('../config/config');
-const setupModels = require('./models');
+const { config } = require('../config/config')
+const setupModels = require('./models')
 
 const options = {
   dialect: 'postgres',
-  logging: config.isProd ? false : console.log,
+  logging: config.isProd ? false : console.log
 }
 
 if (config.isProd) {
@@ -16,8 +16,8 @@ if (config.isProd) {
   }
 }
 
-const sequelize = new Sequelize(config.dbUrl, options);
+const sequelize = new Sequelize(config.dbUrl, options)
 
-setupModels(sequelize);
+setupModels(sequelize)
 
-module.exports = sequelize;
+module.exports = sequelize

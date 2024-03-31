@@ -1,8 +1,8 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
+const { Model, DataTypes, Sequelize } = require('sequelize')
 
-const { CATEGORY_TABLE } = require('./category.model');
+const { CATEGORY_TABLE } = require('./category.model')
 
-const PRODUCT_TABLE = 'products';
+const PRODUCT_TABLE = 'products'
 
 const ProductSchema = {
   id: {
@@ -13,25 +13,25 @@ const ProductSchema = {
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   image: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false
   },
   description: {
     type: DataTypes.TEXT,
-    allowNull: false,
+    allowNull: false
   },
   price: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: false
   },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
     field: 'created_at',
-    defaultValue: Sequelize.NOW,
+    defaultValue: Sequelize.NOW
   },
   categoryId: {
     field: 'category_id',
@@ -46,11 +46,9 @@ const ProductSchema = {
   }
 }
 
-
 class Product extends Model {
-
   static associate(models) {
-    this.belongsTo(models.Category, { as: 'category' });
+    this.belongsTo(models.Category, { as: 'category' })
   }
 
   static config(sequelize) {
@@ -63,4 +61,4 @@ class Product extends Model {
   }
 }
 
-module.exports = { Product, ProductSchema, PRODUCT_TABLE };
+module.exports = { Product, ProductSchema, PRODUCT_TABLE }

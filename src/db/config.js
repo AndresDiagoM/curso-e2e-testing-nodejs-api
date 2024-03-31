@@ -1,9 +1,9 @@
-const { config } = require('./../config/config');
+const { config } = require('./../config/config')
 
 module.exports = {
   development: {
     url: config.dbUrl,
-    dialect: 'postgres',
+    dialect: 'postgres'
   },
   production: {
     url: config.dbUrl,

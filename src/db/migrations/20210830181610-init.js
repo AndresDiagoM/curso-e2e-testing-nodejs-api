@@ -1,12 +1,11 @@
-'use strict';
+'use strict'
 
-const { USER_TABLE } = require('./../models/user.model');
-const { CUSTOMER_TABLE } = require('./../models/customer.model');
-const { CATEGORY_TABLE } = require('./../models/category.model');
-const { PRODUCT_TABLE } = require('./../models/product.model');
-const { ORDER_TABLE } = require('./../models/order.model');
-const { ORDER_PRODUCT_TABLE } = require('./../models/order-product.model');
-
+const { USER_TABLE } = require('./../models/user.model')
+const { CUSTOMER_TABLE } = require('./../models/customer.model')
+const { CATEGORY_TABLE } = require('./../models/category.model')
+const { PRODUCT_TABLE } = require('./../models/product.model')
+const { ORDER_TABLE } = require('./../models/order.model')
+const { ORDER_PRODUCT_TABLE } = require('./../models/order-product.model')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -20,7 +19,7 @@ module.exports = {
       email: {
         allowNull: false,
         type: Sequelize.DataTypes.STRING,
-        unique: true,
+        unique: true
       },
       password: {
         allowNull: false,
@@ -42,7 +41,7 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DataTypes.STRING
       }
-    });
+    })
     await queryInterface.createTable(CUSTOMER_TABLE, {
       id: {
         allowNull: false,
@@ -52,22 +51,22 @@ module.exports = {
       },
       name: {
         allowNull: false,
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING
       },
       lastName: {
         allowNull: false,
         type: Sequelize.DataTypes.STRING,
-        field: 'last_name',
+        field: 'last_name'
       },
       phone: {
         allowNull: true,
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.DataTypes.STRING
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
         field: 'created_at',
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW
       },
       userId: {
         field: 'user_id',
@@ -81,7 +80,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       }
-    });
+    })
     await queryInterface.createTable(CATEGORY_TABLE, {
       id: {
         allowNull: false,
@@ -92,19 +91,19 @@ module.exports = {
       name: {
         type: Sequelize.DataTypes.STRING,
         unique: true,
-        allowNull: false,
+        allowNull: false
       },
       image: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
         field: 'created_at',
-        defaultValue: Sequelize.NOW,
-      },
-    });
+        defaultValue: Sequelize.NOW
+      }
+    })
     await queryInterface.createTable(PRODUCT_TABLE, {
       id: {
         allowNull: false,
@@ -114,25 +113,25 @@ module.exports = {
       },
       name: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       image: {
         type: Sequelize.DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       description: {
         type: Sequelize.DataTypes.TEXT,
-        allowNull: false,
+        allowNull: false
       },
       price: {
         type: Sequelize.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
         field: 'created_at',
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW
       },
       categoryId: {
         field: 'category_id',
@@ -145,7 +144,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       }
-    });
+    })
     await queryInterface.createTable(ORDER_TABLE, {
       id: {
         allowNull: false,
@@ -168,9 +167,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
         field: 'created_at',
-        defaultValue: Sequelize.NOW,
-      },
-    });
+        defaultValue: Sequelize.NOW
+      }
+    })
     await queryInterface.createTable(ORDER_PRODUCT_TABLE, {
       id: {
         allowNull: false,
@@ -182,7 +181,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DataTypes.DATE,
         field: 'created_at',
-        defaultValue: Sequelize.NOW,
+        defaultValue: Sequelize.NOW
       },
       amount: {
         allowNull: false,
@@ -210,16 +209,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL'
       }
-    });
-
+    })
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable(ORDER_PRODUCT_TABLE);
-    await queryInterface.dropTable(ORDER_TABLE);
-    await queryInterface.dropTable(PRODUCT_TABLE);
-    await queryInterface.dropTable(CATEGORY_TABLE);
-    await queryInterface.dropTable(CUSTOMER_TABLE);
-    await queryInterface.dropTable(USER_TABLE);
+    await queryInterface.dropTable(ORDER_PRODUCT_TABLE)
+    await queryInterface.dropTable(ORDER_TABLE)
+    await queryInterface.dropTable(PRODUCT_TABLE)
+    await queryInterface.dropTable(CATEGORY_TABLE)
+    await queryInterface.dropTable(CUSTOMER_TABLE)
+    await queryInterface.dropTable(USER_TABLE)
   }
-};
+}
