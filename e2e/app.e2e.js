@@ -21,7 +21,7 @@ describe('GET /', () => {
     expect(response.headers['content-type']).toBe('application/json; charset=utf-8')
   })
 
-  afterAll(() => {
+  afterEach(() => {
     server.close()
   })
 })
