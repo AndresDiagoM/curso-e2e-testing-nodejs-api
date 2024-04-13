@@ -36,6 +36,15 @@ describe('users endpoint', () => {
   })
 
   describe('POST /api/v1/users', () => {
+    let createdUserId
+
+    afterEach(async () => {
+      if (createdUserId) {
+        await api.delete(`/api/v1/users/${createdUserId}`)
+        createdUserId = null
+      }
+    })
+
     test('create user in /users with invalid email', async () => {
       const body = {
         email: '---------',
@@ -48,6 +57,23 @@ describe('users endpoint', () => {
         message: '"email" must be a valid email',
         statusCode: 400
       })
+    })
+
+    test('create user in /users', async () => {
+      const body = {
+        email: 'nuevo-user@mail.com',
+        password: '123456pass'
+      }
+      const response = await api.post('/api/v1/users').send(body)
+      expect(response.status).toBe(201)
+      expect(typeof response.body).toBe('object')
+      expect(response.body.email).toBe(body.email)
+      // check in db
+      const user = await models.User.findOne({
+        where: { email: body.email }
+      })
+      expect(user.email).toBe(body.email)
+      createdUserId = user.id
     })
   })
 })
