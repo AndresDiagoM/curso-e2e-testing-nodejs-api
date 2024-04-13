@@ -1,17 +1,17 @@
 const request = require('supertest')
-
 const realApp = require('../src/app')
 
 describe('GET /', () => {
-
-  let app = null
   let server = null
   let api = null
 
-  beforeEach(() => {
-    app = realApp
-    server = app.listen(3002)
+  beforeAll(() => {
+    server = realApp.listen(3002)
     api = request(server)
+  })
+
+  afterAll(() => {
+    server.close()
   })
 
   it('should return message in /', async () => {
@@ -21,8 +21,16 @@ describe('GET /', () => {
     expect(response.headers['content-type']).toBe('application/json; charset=utf-8')
   })
 
-  afterEach(() => {
-    server.close()
+  describe('Endpoint with checkApiKey /nueva-ruta', () => {
+    test('check nueva ruta api key in headers', async () => {
+      const response = await api
+        .get('/nueva-ruta')
+        .set('api', '79823')
+      expect(response.status).toBe(200)
+    })
+    test('check nueva ruta without api key in headers', async () => {
+      const response = await api.get('/nueva-ruta')
+      expect(response.status).toBe(401)
+    })
   })
 })
-
