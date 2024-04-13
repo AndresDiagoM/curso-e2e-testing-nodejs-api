@@ -22,13 +22,11 @@ describe('GET /', () => {
   })
 
   describe('Endpoint with checkApiKey /nueva-ruta', () => {
-    test('check nueva ruta api key in headers', async () => {
-      const response = await api
-        .get('/nueva-ruta')
-        .set('api', '79823')
+    test('check /nueva-ruta api key in headers', async () => {
+      const response = await api.get('/nueva-ruta').set('api', '79823')
       expect(response.status).toBe(200)
     })
-    test('check nueva ruta without api key in headers', async () => {
+    test('check /nueva-ruta without api key in headers', async () => {
       const response = await api.get('/nueva-ruta')
       expect(response.status).toBe(401)
     })
