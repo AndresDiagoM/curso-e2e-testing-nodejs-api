@@ -1,22 +1,21 @@
 const request = require('supertest')
-
 const realApp = require('../src/app')
-
 const { models } = require('../src/db/sequelize')
 
 describe('users endpoint', () => {
-  let app = null
   let server = null
   let api = null
 
-  beforeEach(() => {
-    app = realApp
-    server = app.listen(3002)
+  beforeAll(() => {
+    server = realApp.listen(3002)
     api = request(server)
   })
 
+  afterAll(() => {
+    server.close()
+  })
+
   describe('GET /users', () => {
-    
     test('get users from /users', async () => {
       const response = await api.get('/api/v1/users')
       expect(response.status).toBe(200)
@@ -37,17 +36,8 @@ describe('users endpoint', () => {
   })
 
   describe('POST /api/v1/users', () => {
-    let body = null
-
-    beforeEach(() => {
-      body = {
-        email: '',
-        password: ''
-      }
-    })
-
     test('create user in /users with invalid email', async () => {
-      body = {
+      const body = {
         email: '---------',
         password: '123456pass'
       }
@@ -59,9 +49,5 @@ describe('users endpoint', () => {
         statusCode: 400
       })
     })
-  })
-
-  afterEach(() => {
-    server.close()
   })
 })
