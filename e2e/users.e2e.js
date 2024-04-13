@@ -2,6 +2,8 @@ const request = require('supertest')
 
 const realApp = require('../src/app')
 
+const { models } = require('../src/db/sequelize')
+
 describe('users endpoint', () => {
   let app = null
   let server = null
@@ -14,6 +16,7 @@ describe('users endpoint', () => {
   })
 
   describe('GET /users', () => {
+    
     test('get users from /users', async () => {
       const response = await api.get('/api/v1/users')
       expect(response.status).toBe(200)
@@ -22,11 +25,20 @@ describe('users endpoint', () => {
         expect(typeof item).toBe('object')
       })
     })
+
+    test('get user by id from /users/:id', async () => {
+      const id = 1
+      const user = await models.User.findByPk(id) // usar la base de datos para comprobar que el usuario existe vs lo que devuelve la API
+      const response = await api.get('/api/v1/users/' + user.id)
+      expect(response.status).toBe(200)
+      expect(typeof response.body).toBe('object')
+      expect(response.body.email).toBe(user.email)
+    })
   })
 
   describe('POST /api/v1/users', () => {
     let body = null
-    
+
     beforeEach(() => {
       body = {
         email: '',
