@@ -13,13 +13,14 @@
     "migrations:run": "sequelize-cli db:migrate",
     "migrations:revert": "sequelize-cli db:migrate:undo",
     "migrations:delete": "sequelize-cli db:migrate:undo:all",
-    "test:e2e": "jest --config ./jest-e2e.json --verbose --runInBand --detectOpenHandles --forceExit",
-    "test:coverage": "npm run e2e -- --coverage"
+    "test:e2e": "cross-env NODE_ENV=e2e jest --config ./jest-e2e.json --verbose --runInBand --detectOpenHandles --forceExit",
+    "test:coverage": "cross-env NODE_ENV=e2e npm run e2e -- --coverage"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "8.21.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-standard": "^17.1.0",

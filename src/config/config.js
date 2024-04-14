@@ -1,7 +1,15 @@
-require('dotenv').config()
+const env = process.env.NODE_ENV || 'dev'
+const envStage = {
+  'dev': '.env',
+  'e2e': '.env.e2e',
+}
+
+if (envStage[env]) {
+  require('dotenv').config({ path: envStage[env] })
+}
 
 const config = {
-  env: process.env.NODE_ENV || 'dev',
+  env,
   isProd: process.env.NODE_ENV === 'production',
   port: process.env.PORT || 3000,
   dbUrl: process.env.DATABASE_URL,
@@ -11,6 +19,6 @@ const config = {
   smtpPassword: process.env.SMTP_PASSWORD
 }
 
-console.log('ENV:', config.env)
+console.log('ENV:', env, '\ndbUrl:', config.dbUrl)
 
 module.exports = { config }
