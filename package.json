@@ -14,7 +14,9 @@
     "migrations:revert": "sequelize-cli db:migrate:undo",
     "migrations:delete": "sequelize-cli db:migrate:undo:all",
     "test:e2e": "cross-env NODE_ENV=e2e jest --config ./jest-e2e.json --verbose --runInBand --detectOpenHandles --forceExit",
-    "test:coverage": "cross-env NODE_ENV=e2e npm run e2e -- --coverage"
+    "test:coverage": "cross-env NODE_ENV=e2e npm run e2e -- --coverage",
+    "seed:all": "sequelize-cli db:seed:all",
+    "seed:undo": "sequelize-cli db:seed:undo:all"
   },
   "keywords": [],
   "author": "",
