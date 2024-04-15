@@ -2,17 +2,21 @@ const request = require('supertest')
 const realApp = require('../src/app')
 const { models } = require('../src/db/sequelize')
 
+const { upSeed, downSeed } = require('./utils/seed')
+
 describe('Profile endpoint', () => {
   let server = null
   let api = null
 
-  beforeAll(() => {
+  beforeAll(async () => {
     server = realApp.listen(3002)
     api = request(server)
+    await upSeed()
   })
 
-  afterAll(() => {
+  afterAll(async () => {
     server.close()
+    await downSeed()
   })
 
   describe('GET /profile', () => {
@@ -36,7 +40,9 @@ describe('Profile endpoint', () => {
     })
 
     test('get my-user from /profile/my-user', async () => {
-      const user = await models.User.findByPk(1)
+      const user = await models.User.findOne({
+        where: { email: 'admin@mail.com' }
+      })
       const response = await api
         .get('/api/v1/profile/my-user')
         .set('Authorization', `Bearer ${token}`)
