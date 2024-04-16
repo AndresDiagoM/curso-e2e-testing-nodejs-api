@@ -2,6 +2,9 @@ const { CATEGORY_TABLE } = require('../models/category.model')
 
 module.exports = {
   up: (queryInterface) => {
+    if(queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
     return queryInterface.bulkInsert(CATEGORY_TABLE, [
       {
         name: 'Electronics',
@@ -21,6 +24,9 @@ module.exports = {
     ])
   },
   down: (queryInterface, Sequelize) => {
+    if(queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
     return queryInterface.bulkDelete(CATEGORY_TABLE, null, {})
   }
 }

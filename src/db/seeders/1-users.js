@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt')
 
 module.exports = {
   up: (queryInterface) => {
+    if(queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
     const password = 'admin123'
     const hash = bcrypt.hashSync(password, 10)
     return queryInterface.bulkInsert(USER_TABLE, [
@@ -15,6 +18,9 @@ module.exports = {
     ])
   },
   down: (queryInterface, Sequelize) => {
+    if(queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
     return queryInterface.bulkDelete(USER_TABLE, null, {})
   }
 }

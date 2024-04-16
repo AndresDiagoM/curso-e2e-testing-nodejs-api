@@ -2,6 +2,9 @@ const { PRODUCT_TABLE } = require('../models/product.model')
 
 module.exports = {
   up: (queryInterface) => {
+    if(queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
     return queryInterface.bulkInsert(PRODUCT_TABLE, [
       {
         name: 'Laptop',
@@ -30,6 +33,9 @@ module.exports = {
     ])
   },
   down: (queryInterface, Sequelize) => {
+    if(queryInterface.context) {
+      queryInterface = queryInterface.context
+    }
     return queryInterface.bulkDelete(PRODUCT_TABLE, null, {})
   }
 }

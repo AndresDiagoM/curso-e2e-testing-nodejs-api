@@ -2,7 +2,8 @@ const request = require('supertest')
 const realApp = require('../src/app')
 const { models } = require('../src/db/sequelize')
 
-const { upSeed, downSeed } = require('./utils/seed')
+// const { upSeed, downSeed } = require('./utils/seed')
+const { upSeed, downSeed } = require('./utils/umzug')
 
 describe('Profile endpoint', () => {
   let server = null
