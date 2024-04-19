@@ -20,6 +20,12 @@ npm run test:e2e
 
 This will start Jest and run all test files in the e2e directory. Each test file corresponds to a different part of the API.
 
+End-to-end tests are a great way to ensure that your API works as expected and that it continues to work as you make changes to it. They can help you catch bugs early and avoid regressions in your code. 
+
+This kind of testing is essential for any production application, as it helps you try out the services and database connections in a real-world scenario. 
+
+![Logo](./src/utils/auth/testing.png)
+
 ### Tech Stack
 
 | Tech Stack | Badge |

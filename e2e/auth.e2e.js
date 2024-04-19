@@ -5,6 +5,15 @@ const { models } = require('../src/db/sequelize')
 // const { upSeed, downSeed } = require('./utils/seed')
 const { upSeed, downSeed } = require('./utils/umzug')
 
+// Hacer mock de la librería nodemailer
+const mockSendMail = jest.fn()
+
+jest.mock('nodemailer', () => ({
+  createTransport: () => ({
+    sendMail: mockSendMail
+  })
+}))
+
 describe('Auth endpoint', () => {
   let server = null
   let api = null
@@ -45,6 +54,25 @@ describe('Auth endpoint', () => {
       expect(typeof response.body).toBe('object')
       expect(response.body.access_token).toBeTruthy()
       expect(response.body.user.id).toBe(user.id)
+    })
+  })
+
+  describe('POST /auth/recovery', () => {
+
+    beforeAll(() => {
+      mockSendMail.mockClear()
+    })
+
+    test('password recovery - send email', async () => {
+      const user = await models.User.findByPk(1)
+      mockSendMail.mockResolvedValueOnce(true) // para que el mock retorne true
+      const response = await api.post('/api/v1/auth/recovery').send({
+        email: user.email
+      })
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual({
+        message: 'mail sent'
+      })
     })
   })
 })
