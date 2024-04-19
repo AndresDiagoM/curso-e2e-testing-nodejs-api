@@ -14,7 +14,13 @@ module.exports = {
         password: hash,
         role: 'admin',
         created_at: new Date()
-      }
+      },
+      {
+        email: 'customer1@mail.com',
+        password: hash,
+        role: 'customer',
+        created_at: new Date()
+      },
     ])
   },
   down: (queryInterface, Sequelize) => {
