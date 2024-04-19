@@ -34,7 +34,25 @@ describe('Products endpoint', () => {
       expect(response.body).toEqual(expect.arrayContaining([expect.any(Object)]))
       expect(response.body[0].category).toEqual(expect.any(Object))
     })
+
+    test('get 3 products from /products with pagination', async () => {
+      const response = await api
+        .get('/api/v1/products?offset=0&limit=3')
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual(expect.arrayContaining([expect.any(Object)]))
+      expect(response.body.length).toBe(3)
+    })
+
+    test('get 4 products from /products with pagination', async () => {
+      const response = await api
+        .get('/api/v1/products?offset=0&limit=4')
+        .set('Authorization', `Bearer ${token}`)
+
+      expect(response.status).toBe(200)
+      expect(response.body).toEqual(expect.arrayContaining([expect.any(Object)]))
+      expect(response.body.length).toBe(4)
+    })
   })
-
-
 })

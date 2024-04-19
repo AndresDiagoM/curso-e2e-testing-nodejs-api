@@ -30,6 +30,14 @@ module.exports = {
         category_id: 3,
         created_at: new Date()
       },
+      {
+        name: 'shoes',
+        description: 'A shoe is an item of footwear intended to protect and comfort the human foot.',
+        price: 50,
+        image: 'https://source.unsplash.com/1600x900/?shoes',
+        category_id: 3,
+        created_at: new Date()
+      },
     ])
   },
   down: (queryInterface, Sequelize) => {
