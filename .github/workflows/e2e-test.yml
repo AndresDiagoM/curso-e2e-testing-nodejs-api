@@ -1,0 +1,44 @@
+name: API CI/CD
+
+on:
+  push:
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+
+    services:
+      postgres-e2e:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: db_e2e
+          POSTGRES_USER: e2e
+          POSTGRES_PASSWORD: e2e123
+
+    steps:
+      - name: Checkout code # clone the repository code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm run test:e2e:ci
+        env: ### ENV: test
+            NODE_ENV :  test
+            # app port
+            PORT :  3000
+            # Database configuration
+            DATABASE_URL :  postgres://e2e:e2e123@postgres-e2e:5432/db_e2e # aquí no va localhost,sino el nombre del servicio 'postgres-e2e'
+            # JWT configuration
+            API_KEY :  79823
+            JWT_SECRET : 'secret123456'
+            # SMTP configuration
+            SMTP_EMAIL : your@email.com
+            SMTP_PASSWORD : password-email
